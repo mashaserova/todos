@@ -1,0 +1,21 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mashaserova/todos.git"
+  },
+  "author": "mashaserova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mashaserova/todos/issues"
+  },
+  "homepage": "https://github.com/mashaserova/todos#readme",
+  "description": ""
+}
