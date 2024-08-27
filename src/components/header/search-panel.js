@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SearchPanel = ({newTask = '', handleInputChange, handleAddTask}) => {
+const SearchPanel = ({newTask, handleInputChange, handleAddTask}) => {
     return <input 
         className="new-todo"
         placeholder="What needs to be done?"

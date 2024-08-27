@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppHeading from './app-heading';
 import SearchPanel from './search-panel';
 
-const Header = ({newTask = '', handleInputChange, handleAddTask}) => {
+const Header = ({newTask, handleInputChange, handleAddTask}) => {
     return (
         <header className="header">
             <AppHeading />
