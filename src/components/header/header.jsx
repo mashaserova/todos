@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppHeading from './app-heading';
 import SearchPanel from './search-panel';
 
 const Header = ({ newTask, handleInputChange, handleAddTask }) => {
   return (
     <header className="header">
-      <AppHeading />
+      <h1>todos</h1>
       <SearchPanel newTask={newTask} handleInputChange={handleInputChange} handleAddTask={handleAddTask} />
     </header>
   );

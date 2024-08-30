@@ -2,15 +2,15 @@ module.exports = {
   languageOptions: {
     globals: {
       browser: true,
-      es2021: true
+      es2021: true,
     },
     parserOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
       ecmaFeatures: {
-        jsx: true
-      }
-    }
+        jsx: true,
+      },
+    },
   },
   ignores: ['node_modules', 'dist', 'build'],
   rules: {
@@ -27,16 +27,16 @@ module.exports = {
       2,
       {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'always'
-      }
-    ]
+        'newlines-between': 'always',
+      },
+    ],
   },
   settings: {
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', 'src/']
-      }
-    }
-  }
+        moduleDirectory: ['node_modules', 'src/'],
+      },
+    },
+  },
 };

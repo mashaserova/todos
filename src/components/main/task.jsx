@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 
 const Task = ({
+  id,
   isCompleted = false,
   isEditing = false,
   task = '',
@@ -31,7 +32,7 @@ const Task = ({
     setEditing(false);
   };
   return (
-    <li key={index} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
+    <li id={id} key={index} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
       {editing && (
         <input
           className="edit"

@@ -3,37 +3,36 @@ import PropTypes from 'prop-types';
 import Task from './task';
 
 const TaskList = ({ todos = [], toggleCheckbox, deleteTask, setTodos }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const handleEdit = (index) => {
-    setIsEditing(index);
+  const [isEditing, setIsEditing] = useState(null); //id редактируемой задачи
+  const handleEdit = (id) => {
+    setIsEditing(id);
   };
-  const handleSave = (index, newTask) => {
+  const handleSave = (id, newTask) => {
     setTodos((prevTodos) => {
-      return prevTodos.map((task, i) => {
-        if (i === index) {
-          return { ...task, text: newTask, isEditing: false };
+      return prevTodos.map((task) => {
+        if (task.id === id) {
+          return { ...task, text: newTask, isEditing: null };
         } else {
           return task;
         }
       });
     });
-    setIsEditing(false);
+    setIsEditing(null);
   };
   return (
     <ul className="todo-list">
-      {todos.map((task, index) => (
+      {todos.map((task) => (
         <Task
-          key={index}
+          key={task.id}
           task={task.text}
           isCompleted={task.isCompleted}
-          isEditing={isEditing === index}
-          toggleCheckbox={() => toggleCheckbox(index)}
-          deleteTask={() => deleteTask(index)}
-          index={index}
+          isEditing={isEditing === task.id}
+          toggleCheckbox={() => toggleCheckbox(task.id)}
+          deleteTask={() => deleteTask(task.id)}
           whenTaskCreated={task.whenTaskCreated}
           setTodos={setTodos}
-          handleEdit={() => handleEdit(index)}
-          handleSave={(newTask) => handleSave(index, newTask)}
+          handleEdit={() => handleEdit(task.id)}
+          handleSave={(newTask) => handleSave(task.id, newTask)}
         />
       ))}
     </ul>
