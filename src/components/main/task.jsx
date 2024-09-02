@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -15,42 +15,46 @@ const Task = ({
 }) => {
   const formattedTime = formatDistanceToNow(whenTaskCreated, { addSuffix: true });
   const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
+  const [editedTask, setEditedTask] = useState(task);
   const handleEdit = () => {
     setEditing(true);
   };
-  const handleSave = () => {
+  const handleSave = (editedTask) => {
     setTodos((prevTodos) => {
-      return prevTodos.map((t, i) => {
-        if (i === index) {
-          return { ...t, text: inputRef.current.value, isEditing: false };
+      return prevTodos.map((task) => {
+        if (task.id === id) {
+          console.log(editedTask)
+          return { ...task, text: editedTask, isEditing: false };
         } else {
-          return t;
+          return task;
         }
       });
     });
     setEditing(false);
   };
+
+  const handleInputChange = (event) => {
+    setEditedTask(event.target.value);
+  }
   return (
-    <li id={id} key={index} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
-      {editing && (
+    <li id={id} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
+      {editing ? (
         <input
           className="edit"
-          ref={inputRef}
-          defaultValue={task}
+          value={editedTask}
+          onChange={handleInputChange}
           autoFocus
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSave();
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleSave(event.target.value);
             }
           }}
         />
-      )}
-      {!editing && (
+      ) : (
         <div className="view">
           <input className="toggle" type="checkbox" checked={isCompleted} onChange={() => toggleCheckbox(index)} />
           <label>
-            <span className="description">{task}</span>
+            <span className="description">{editedTask}</span>
             <span className="created">{formattedTime}</span>
           </label>
           <button className="icon icon-edit" onClick={handleEdit}></button>
@@ -62,12 +66,12 @@ const Task = ({
 };
 
 Task.propTypes = {
-  isCompleted: PropTypes.bool.isRequired,
-  isEditing: PropTypes.bool.isRequired,
+  isCompleted: PropTypes.bool,
+  isEditing: PropTypes.bool,
   task: PropTypes.string.isRequired,
   toggleCheckbox: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
   whenTaskCreated: PropTypes.object.isRequired,
   setTodos: PropTypes.func.isRequired,
 };

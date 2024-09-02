@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TaskList from './task-list';
 
-const Main = ({ todos = [], toggleCheckbox, deleteTask, filter = 'all', setTodos }) => {
-  const filteredTodos =
-    filter === 'all'
-      ? todos
-      : filter === 'active'
-        ? todos.filter((todo) => !todo.isCompleted)
-        : todos.filter((todo) => todo.isCompleted);
-
+const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', setTodos }) => {
+  
+  const filteredTodos = () => {
+    if (filter === 'all') {
+      return todos
+    } else if (filter === 'active') {
+      return todos.filter((todo) => !todo.isCompleted)
+    } else {
+      return todos.filter((todo) => todo.isCompleted)
+    }
+  }
   return (
     <section className="main">
-      <TaskList todos={filteredTodos} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} setTodos={setTodos} />
+      <TaskList todos={filteredTodos()} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} setTodos={setTodos} />
     </section>
   );
 };

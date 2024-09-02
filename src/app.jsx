@@ -5,9 +5,9 @@ import Main from './components/main/main';
 import Footer from './components/footer/footer';
 
 const App = () => {
+  //все хуки и переменные
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState('all');
-  const [newTask, setNewTask] = useState('');
   const [count, setCount] = useState(0);
 
   //функция, которая изменяет todos по клику на checkbox
@@ -32,25 +32,19 @@ const App = () => {
     itemCount();
   };
 
-  //функция, которая изменяет текст задачи
-  const handleInputChange = (event) => {
-    setNewTask(event.target.value);
-  };
   //функция, которая добавляет измененную задачу
-  const handleAddTask = (event) => {
-    if (event.key === 'Enter' && event.target.value.trim() !== 0) {
+  const handleAddTask = (text) => {
+    if (text.trim() !== 0) {
       setTodos((prevTodos) => [
         ...prevTodos,
         {
           id: idGenerator(),
-          text: newTask,
+          text,
           isCompleted: false,
           isEditing: false,
           whenTaskCreated: new Date(),
         },
       ]);
-      setNewTask('');
-      event.target.value = '';
       itemCount();
     }
   };
@@ -69,7 +63,7 @@ const App = () => {
   
   return (
     <section className="todoapp">
-      <Header value={newTask} handleInputChange={handleInputChange} handleAddTask={handleAddTask} />
+      <Header handleAddTask={handleAddTask} />
       <Main todos={todos} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} filter={filter} setTodos={setTodos} />
       <Footer count={count} filter={filter} setFilter={setFilter} clearCompleted={clearCompleted} />
     </section>

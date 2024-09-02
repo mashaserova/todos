@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const SearchPanel = ({ newTask, handleInputChange, handleAddTask }) => {
+const SearchPanel = ({ handleAddTask }) => {
+  const [newTask, setNewTask] = useState('');
+  //функция, которая изменяет текст задачи
+  const handleInputChange = (event) => {
+    setNewTask(event.target.value);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && newTask.trim() !== '') {
+      handleAddTask(newTask);
+      setNewTask('');
+      event.target.value = '';
+    }
+  }
   return (
     <input
       className="new-todo"
@@ -9,15 +21,13 @@ const SearchPanel = ({ newTask, handleInputChange, handleAddTask }) => {
       autoFocus
       value={newTask}
       onChange={handleInputChange}
-      onKeyDown={handleAddTask}
+      onKeyDown={handleKeyDown}
     />
   );
 };
 
 SearchPanel.propTypes = {
-  newTask: PropTypes.string,
-  handleInputChange: PropTypes.func.isRequired,
-  handleAddTask: PropTypes.func.isRequired,
+  handleAddTask: PropTypes.func
 };
 
 export default SearchPanel;
