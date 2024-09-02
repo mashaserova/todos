@@ -34,7 +34,7 @@ const App = () => {
 
   //функция, которая добавляет измененную задачу
   const handleAddTask = (text) => {
-    if (text.trim() !== 0) {
+    if (text.trim() !== "") {
       setTodos((prevTodos) => [
         ...prevTodos,
         {

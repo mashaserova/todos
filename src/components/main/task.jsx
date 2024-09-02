@@ -16,10 +16,16 @@ const Task = ({
   const formattedTime = formatDistanceToNow(whenTaskCreated, { addSuffix: true });
   const [editing, setEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
+  const [previousTask, setPreviousTask] = useState(task);
   const handleEdit = () => {
+    setPreviousTask(editedTask)
     setEditing(true);
   };
-  const handleSave = (editedTask) => {
+  const handleSave = (event) => {
+    event.preventDefault();
+    if (editedTask.trim() === "") {
+      setEditedTask(previousTask);
+    }
     setTodos((prevTodos) => {
       return prevTodos.map((task) => {
         if (task.id === id) {
@@ -32,24 +38,25 @@ const Task = ({
     });
     setEditing(false);
   };
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSave(editedTask);
+  }
   const handleInputChange = (event) => {
     setEditedTask(event.target.value);
   }
   return (
     <li id={id} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
       {editing ? (
-        <input
+        <form onSubmit={handleSubmit}>
+          <input
           className="edit"
           value={editedTask}
           onChange={handleInputChange}
           autoFocus
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              handleSave(event.target.value);
-            }
-          }}
+          required
         />
+        </form>
       ) : (
         <div className="view">
           <input className="toggle" type="checkbox" checked={isCompleted} onChange={() => toggleCheckbox(index)} />
