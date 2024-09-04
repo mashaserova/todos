@@ -9,9 +9,8 @@ const Task = ({
   task = '',
   toggleCheckbox,
   deleteTask,
-  index = 0,
   whenTaskCreated = new Date(),
-  setTodos,
+  handleTodosChange
 }) => {
   const formattedTime = formatDistanceToNow(whenTaskCreated, { addSuffix: true });
   const [editing, setEditing] = useState(false);
@@ -22,11 +21,13 @@ const Task = ({
     setEditing(true);
   };
   const handleSave = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     if (editedTask.trim() === "") {
       setEditedTask(previousTask);
     }
-    setTodos((prevTodos) => {
+    handleTodosChange((prevTodos) => {
       return prevTodos.map((task) => {
         if (task.id === id) {
           console.log(editedTask)
@@ -40,32 +41,38 @@ const Task = ({
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleSave(editedTask);
+    handleSave(event);
   }
   const handleInputChange = (event) => {
     setEditedTask(event.target.value);
   }
+  let liClassName = '';
+  if (isCompleted) {
+    liClassName = 'completed';
+  } else if (isEditing) {
+    liClassName = 'editing';
+  }
   return (
-    <li id={id} className={isCompleted ? 'completed' : isEditing ? 'editing' : ''}>
+    <li className={liClassName}>
       {editing ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <input
           className="edit"
           value={editedTask}
           onChange={handleInputChange}
           autoFocus
           required
-        />
+          />
         </form>
       ) : (
         <div className="view">
-          <input className="toggle" type="checkbox" checked={isCompleted} onChange={() => toggleCheckbox(index)} />
+          <input className="toggle" type="checkbox" checked={isCompleted} onChange={() => toggleCheckbox(id)} />
           <label>
             <span className="description">{editedTask}</span>
             <span className="created">{formattedTime}</span>
           </label>
           <button className="icon icon-edit" onClick={handleEdit}></button>
-          <button className="icon icon-destroy" onClick={() => deleteTask(index)}></button>
+          <button className="icon icon-destroy" onClick={() => deleteTask(id)}></button>
         </div>
       )}
     </li>

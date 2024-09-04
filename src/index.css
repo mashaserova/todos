@@ -41,6 +41,9 @@ body {
   font-weight: 300;
 }
 
+form {
+  margin-block-end: 0;
+}
 :focus {
   outline: 0;
 }

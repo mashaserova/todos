@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TaskList from './task-list';
 
-const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', setTodos }) => {
+const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', handleTodosChange }) => {
   
   const filteredTodos = () => {
     if (filter === 'all') {
@@ -15,7 +15,7 @@ const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', setTodos }) =
   }
   return (
     <section className="main">
-      <TaskList todos={filteredTodos()} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} setTodos={setTodos} />
+      <TaskList todos={filteredTodos()} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} handleTodosChange={handleTodosChange} />
     </section>
   );
 };

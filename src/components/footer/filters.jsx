@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Filters = ({ filter = 'all', setFilter }) => {
-  const handleFilterChange = (filterType) => {
-    setFilter(filterType);
-  };
+const Filters = ({ filter = 'all', handleFilterChange}) => {
   return (
     <ul className="filters">
       <li>

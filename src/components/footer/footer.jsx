@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Filters from './filters';
-const Footer = ({ count, filter = 'all', setFilter, clearCompleted }) => {
+const Footer = ({ count, filter = 'all', handleFilterChange, clearCompleted }) => {
   return (
     <footer className="footer">
       <span className="todo-count">{count} items left</span>
-      <Filters filter={filter} setFilter={setFilter} />
+      <Filters filter={filter} handleFilterChange={handleFilterChange} />
       <button className="clear-completed" onClick={clearCompleted}>
         Clear completed
       </button>

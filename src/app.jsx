@@ -61,11 +61,17 @@ const App = () => {
   
   useEffect(() => itemCount(), [todos, itemCount]);
   
+  const handleTodosChange = (newTodos) => {
+    setTodos(newTodos);
+  };
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  }
   return (
     <section className="todoapp">
       <Header handleAddTask={handleAddTask} />
-      <Main todos={todos} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} filter={filter} setTodos={setTodos} />
-      <Footer count={count} filter={filter} setFilter={setFilter} clearCompleted={clearCompleted} />
+      <Main todos={todos} toggleCheckbox={toggleCheckbox} deleteTask={deleteTask} filter={filter} handleTodosChange={handleTodosChange} />
+      <Footer count={count} filter={filter} handleFilterChange={handleFilterChange} clearCompleted={clearCompleted} />
     </section>
   );
 };

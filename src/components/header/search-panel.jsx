@@ -3,26 +3,26 @@ import PropTypes from 'prop-types';
 
 const SearchPanel = ({ handleAddTask }) => {
   const [newTask, setNewTask] = useState('');
-  //функция, которая изменяет текст задачи
-  const handleInputChange = (event) => {
-    setNewTask(event.target.value);
-  };
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter" && newTask.trim() !== '') {
+  
+  const handleSubmit = (event) => {
+    if (newTask.trim() !== '') {
+      event.preventDefault();
       handleAddTask(newTask);
       setNewTask('');
-      event.target.value = '';
+      console.log(newTask)
     }
   }
   return (
-    <input
-      className="new-todo"
-      placeholder="What needs to be done?"
-      autoFocus
-      value={newTask}
-      onChange={handleInputChange}
-      onKeyDown={handleKeyDown}
-    />
+    <form onSubmit={handleSubmit}>
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        autoFocus
+        value={newTask}
+        onChange={(event) => setNewTask(event.target.value)}
+        required
+      />
+    </form>
   );
 };
 
