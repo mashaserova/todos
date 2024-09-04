@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchPanel from './search-panel';
+import './header.css'
 
 const Header = ({ handleAddTask }) => {
   return (

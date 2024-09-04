@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Filters from './filters';
+import './footer.css'
 const Footer = ({ count, filter = 'all', handleFilterChange, clearCompleted }) => {
   return (
     <footer className="footer">

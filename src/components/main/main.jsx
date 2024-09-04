@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TaskList from './task-list';
+import './main.css'
 
 const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', handleTodosChange }) => {
   
