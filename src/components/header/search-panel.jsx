@@ -9,7 +9,6 @@ const SearchPanel = ({ handleAddTask }) => {
       event.preventDefault();
       handleAddTask(newTask);
       setNewTask('');
-      console.log(newTask)
     }
   }
   return (

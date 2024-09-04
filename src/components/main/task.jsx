@@ -30,7 +30,6 @@ const Task = ({
     handleTodosChange((prevTodos) => {
       return prevTodos.map((task) => {
         if (task.id === id) {
-          console.log(editedTask)
           return { ...task, text: editedTask, isEditing: false };
         } else {
           return task;
@@ -87,7 +86,7 @@ Task.propTypes = {
   deleteTask: PropTypes.func.isRequired,
   index: PropTypes.number,
   whenTaskCreated: PropTypes.object.isRequired,
-  setTodos: PropTypes.func.isRequired,
+  handleTodosChange: PropTypes.func.isRequired,
 };
 
 export default Task;

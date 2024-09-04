@@ -24,7 +24,7 @@ TaskList.propTypes = {
   todos: PropTypes.array.isRequired,
   toggleCheckbox: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
-  setTodos: PropTypes.func.isRequired,
+  handleTodosChange: PropTypes.func.isRequired,
 };
 
 export default TaskList;

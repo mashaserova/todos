@@ -25,7 +25,7 @@ Main.propTypes = {
   toggleCheckbox: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
-  setTodos: PropTypes.func.isRequired,
+  handleTodosChange: PropTypes.func.isRequired,
 };
 
 export default Main;

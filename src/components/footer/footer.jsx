@@ -15,7 +15,7 @@ const Footer = ({ count, filter = 'all', handleFilterChange, clearCompleted }) =
 };
 Footer.propTypes = {
   filter: PropTypes.string.isRequired,
-  setFilter: PropTypes.func.isRequired,
+  handleFilterChange: PropTypes.func.isRequired,
   clearCompleted: PropTypes.func.isRequired,
 };
 
