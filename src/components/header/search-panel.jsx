@@ -27,7 +27,7 @@ const SearchPanel = ({ handleAddTask }) => {
                 className="new-todo-form__timer"
                 type="number"
                 id="minutes-input"
-                placeholder="Минуты"
+                placeholder="Min"
                 min="0"
                 onChange={(event) => setMinutes(event.target.value)}
                 required
@@ -36,7 +36,7 @@ const SearchPanel = ({ handleAddTask }) => {
                 className="new-todo-form__timer"
                 type="number"
                 id="seconds-input"
-                placeholder="Секунды"
+                placeholder="Sec"
                 min="0" max="59"
                 onChange={(event) => setSeconds(event.target.value)}
                 required
