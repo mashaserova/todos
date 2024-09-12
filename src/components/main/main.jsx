@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TaskList from './task-list';
 import './main.css';
 
-const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', handleTodosChange }) => {
+const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', handleTodosChange, timers, startTimer, stopTimer, }) => {
     const filteredTodos = () => {
         if (filter === 'all') {
             return todos;
@@ -20,6 +20,9 @@ const Main = ({ todos, toggleCheckbox, deleteTask, filter = 'all', handleTodosCh
                 toggleCheckbox={toggleCheckbox}
                 deleteTask={deleteTask}
                 handleTodosChange={handleTodosChange}
+                timers={timers}
+                startTimer={startTimer}
+                stopTimer={stopTimer}
             />
         </section>
     );

@@ -11,14 +11,15 @@ const Task = ({
     deleteTask,
     whenTaskCreated = new Date(),
     handleTodosChange,
-    timerInSeconds,
+    timers,
+    startTimer,
+    stopTimer,
 }) => {
     const formattedTime = formatDistanceToNow(whenTaskCreated, { addSuffix: true });
     const [editing, setEditing] = useState(false);
     const [editedTask, setEditedTask] = useState(task);
     const [previousTask, setPreviousTask] = useState(task);
-    const [secondsLeft, setSecondsLeft] = useState(timerInSeconds);
-    const [isRunning, setIsRunning] = useState(true);
+    const [secondsLeft, setSecondsLeft] = useState(timers && timers[id] ? timers[id] : 0);
 
     const handleEdit = () => {
         setPreviousTask(editedTask);
@@ -50,31 +51,28 @@ const Task = ({
         setEditedTask(event.target.value);
     };
 
-    useEffect( () => {
-        let intervalId;
-        if (!isCompleted && isRunning && secondsLeft > 0) {
-            intervalId = setInterval(() => {
-                setSecondsLeft((prevSeconds) => prevSeconds - 1);
-            }, 1000);
-        } else {
-            clearInterval(intervalId);
-        }
-        return () => clearInterval(intervalId);
-    }, [isCompleted, isRunning, secondsLeft]);
-
-
     const formattedTimer = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secondsLeft = seconds % 60;
         return `${minutes}:${secondsLeft}`
     }
-    const startTimer = () => {
-        setIsRunning(true)
-    }
-    const stopTimer = () => {
-        setIsRunning(false)
-    }
 
+    const handleStartTimer = () => {
+        startTimer(id);
+    };
+    
+    const handleStopTimer = () => {
+        stopTimer(id); 
+    };
+    useEffect(() => {
+        if (timers[id]) { // Проверяем, существует ли timers[id]
+            setSecondsLeft(timers[id]);
+        }
+    }, [timers, id]);
+    useEffect(() => {
+        setEditedTask(task);
+        setPreviousTask(task);
+    }, [task]);
     let liClassName = '';
     if (isCompleted) {
         liClassName = 'completed';
@@ -98,10 +96,10 @@ const Task = ({
                     <label>
                         <span className="description">{editedTask}</span>
                         <>
-                            {secondsLeft > 0 ? (
+                            {timers[id] && timers[id] > 0 ? (
                                 <span className="timer">
-                                    <button className="icon icon-play" onClick={startTimer}></button>
-                                    <button className="icon icon-pause" onClick={stopTimer}></button>
+                                    <button className="icon icon-play" onClick={handleStartTimer}></button>
+                                    <button className="icon icon-pause" onClick={handleStopTimer}></button>
                                     {formattedTimer(secondsLeft)}
                                 </span>
                             ) : (

@@ -9,6 +9,7 @@ const App = () => {
     const [todos, setTodos] = useState([]);
     const [filter, setFilter] = useState('all');
     const [count, setCount] = useState(0);
+    const [timers, setTimers] = useState({});
 
     //функция, которая изменяет todos по клику на checkbox
     const toggleCheckbox = (id) => {
@@ -36,10 +37,11 @@ const App = () => {
     const handleAddTask = (text, minutes, seconds) => {
         if (text.trim() !== '') {
             const timerInSeconds = (minutes * 60) + Number(seconds)
+            const newId = idGenerator();
             setTodos((prevTodos) => [
                 ...prevTodos,
                 {
-                    id: idGenerator(),
+                    id: newId,
                     text,
                     isCompleted: false,
                     isEditing: false,
@@ -47,6 +49,7 @@ const App = () => {
                     timerInSeconds: timerInSeconds,
                 },
             ]);
+            setTimers((prevTimers) => ({...prevTimers, [newId]: timerInSeconds}));
             itemCount();
         }
     };
@@ -65,10 +68,47 @@ const App = () => {
 
     const handleTodosChange = (newTodos) => {
         setTodos(newTodos);
+        setTimers((prevTimers) => {
+            const newTimers = { ...prevTimers };
+            newTodos.forEach((task) => {
+                if (!task.isCompleted) {
+                    newTimers[task.id] = prevTimers[task.id] || task.timerInSeconds;
+                }
+            });
+            return newTimers
+        })
     };
     const handleFilterChange = (newFilter) => {
         setFilter(newFilter);
     };
+
+    const startTimer = (id) => {
+        setTimers((prevTimers) => {
+            return {...prevTimers, [id]: prevTimers[id] || 0}
+        });
+    };
+
+    const stopTimer = (id) => {
+        setTimers((prevTimers) => {
+            return {prevTimers, [id]: 0}
+        });
+    };
+
+    useEffect(() => {
+        const activeTimers = todos.filter((task) => !task.isCompleted).map((task) => task.id);
+        const intervalId = setInterval(() => {
+            setTimers((prevTimers) => {
+                const newTimers = { ...prevTimers };
+                activeTimers.forEach((id) => {
+                    if (newTimers[id] > 0) {
+                        newTimers[id] -= 1;
+                    }
+                });
+                return newTimers;
+            });
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, [todos]);
     return (
         <section className="todoapp">
             <Header handleAddTask={handleAddTask} />
@@ -78,6 +118,9 @@ const App = () => {
                 deleteTask={deleteTask}
                 filter={filter}
                 handleTodosChange={handleTodosChange}
+                timers={timers}
+                startTimer={startTimer}
+                stopTimer={stopTimer}
             />
             <Footer
                 count={count}

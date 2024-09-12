@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 
 const SearchPanel = ({ handleAddTask }) => {
     const [newTask, setNewTask] = useState('');
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState('');
+    const [seconds, setSeconds] = useState('');
 
     const handleSubmit = (event) => {
         if (newTask.trim() !== '') {
             event.preventDefault();
             handleAddTask(newTask, minutes, seconds);
             setNewTask('');
+            setMinutes('');
+            setSeconds('');
         }
     };
     return (
@@ -29,6 +31,7 @@ const SearchPanel = ({ handleAddTask }) => {
                 id="minutes-input"
                 placeholder="Min"
                 min="0"
+                value={minutes}
                 onChange={(event) => setMinutes(event.target.value)}
                 required
             />
@@ -38,6 +41,7 @@ const SearchPanel = ({ handleAddTask }) => {
                 id="seconds-input"
                 placeholder="Sec"
                 min="0" max="59"
+                value={seconds}
                 onChange={(event) => setSeconds(event.target.value)}
                 required
             />

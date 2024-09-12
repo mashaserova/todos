@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Task from './task';
 
-const TaskList = ({ todos, toggleCheckbox, deleteTask, handleTodosChange }) => {
+const TaskList = ({ todos, toggleCheckbox, deleteTask, handleTodosChange, timers, startTimer, stopTimer, }) => {
     return (
         <ul className="todo-list">
             {todos.map((task) => (
@@ -16,6 +16,9 @@ const TaskList = ({ todos, toggleCheckbox, deleteTask, handleTodosChange }) => {
                     whenTaskCreated={task.whenTaskCreated}
                     handleTodosChange={handleTodosChange}
                     timerInSeconds={task.timerInSeconds}
+                    timers={timers}
+                    startTimer={startTimer}
+                    stopTimer={stopTimer}
                 />
             ))}
         </ul>
